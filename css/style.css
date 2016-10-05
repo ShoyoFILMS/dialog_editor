@@ -1,0 +1,109 @@
+html,body{
+	margin:0;
+}
+body{
+	background:#222;
+}
+h1{
+	font-size:12px;
+	margin:0;
+	padding-left:5px;
+	line-height:15px;
+}
+div#main{
+	width:980px;
+	margin:0 auto;
+	background:#fff;
+	border:1px solid #000;
+}
+p.empty_text,div.setting h2{
+	font-size:16px;
+	margin:10px 0 10px 10px;
+	font-weight:bold;
+}
+
+div.menu{
+	background:#a9a9a9;
+	padding:5px;
+}
+div.menu div.btn-toolbar{
+	margin:0;
+}
+div.article{
+	background:#dcdcdc;
+	width:680px;
+	float:left;
+	height:600px;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+
+/*<!style=\"url('http://bmimg.nicovideo.jp/image/ch2543599/99508/fcde392e3409acf0d7d8f3fa7b083376193811e1.jpg') no-repeat 20px 20px;margin:0 0 20px;padding:20px 20px 20px 150px;"*/
+
+div.left_node,div.right_node{
+	clear:both;
+	width:508px;
+	border:1px solid #ddd;
+}
+div.left_node{
+	min-height:110px;
+	float:left;
+	background:#fff no-repeat 20px 20px;
+	padding:20px 20px 20px 150px;
+}
+div.left_node p{
+	margin:0;
+	padding-bottom:10px;
+}
+
+div.right_node{
+	min-height:110px;
+	float:right;
+	background:#fff no-repeat 550px 20px;
+	padding:20px 150px 20px 20px;
+}
+div.right_node p{
+	margin:0;
+	padding-bottom:10px;
+}
+
+
+div.left_node img.icon,div.right_node img.icon{
+	display:block;
+}
+div.left_node img.icon{
+	float:left;
+	border-right:1px solid #ddd;
+}
+div.right_node img.icon{
+	float:right;
+	border-left:1px solid #ddd;
+}
+div.selected_node, div.selected_node p.line{
+	background-color:#faa;
+}
+
+div.setting{
+	background:#a9a9a9;
+	width:300px;
+	height:600px;
+	float:left;
+	text-align:center;
+}
+div.setting h2{
+	line-height:20px;
+	padding:0;
+	margin-right:10px;
+}
+div.setting img.node_param,div.setting select.node_param,div.setting textarea.node_param,div.setting button.node_param{
+	display:block;
+	margin:0 auto 10px;
+}
+div.setting hr{
+	width:90%;
+	margin:10px auto;
+}
+div.setting textarea.xml_io{
+	width:270px;
+	height:500px;
+}
