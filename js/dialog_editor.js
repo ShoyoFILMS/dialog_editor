@@ -25,10 +25,10 @@ function reprint(){
 	var article_body="";
 	var node_len= node_list.length;
 	for(var i=0; i<node_len; i++){
-		if(node_list[i][0]=="left"){
-			node=get_left_node(i,node_list[i][1],node_list[i][2]);
-		}else if(node_list[i][0]=="right"){
-			node=get_right_node(i,node_list[i][1],node_list[i][2]);
+		if(node_list[i]["type"]=="left"){
+			node=get_left_node(i,node_list[i]["img"],node_list[i]["line"]);
+		}else if(node_list[i]["type"]=="right"){
+			node=get_right_node(i,node_list[i]["img"],node_list[i]["line"]);
 		}
 		article_body+=node;
 	}
@@ -47,9 +47,9 @@ function reprint(){
 //ノードを追加（addLeftNode,addRightNodeで呼び出し）
 function addNode(node_data){
 	if(isNumber(selected_node_id))
-		node_list=array_putin(node_list,selected_node_id,[node_data,"empty","セリフを追加"]);
+		node_list=array_putin(node_list,selected_node_id,{"type":node_data,"img":"empty","line":"セリフを追加"});
 	else
-		node_list.push([node_data,"empty","セリフを追加"]);
+	node_list.push({"type":node_data,"img":"empty","line":"セリフを追加"});
 	$("div.setting").html("<p class=\"empty_text\">未選択</p>");
 	selected_node_id=false;
 	reprint();
@@ -60,12 +60,12 @@ $("button.btn_output").click(function(){
 	$("div.setting").html("<h2>出力データ</h2><textarea class=\"xml_io\"></textarea>");
 	var output_html="";
 	for(var i=0; i<node_list.length; i++){
-		if(node_list[i][0]=="left"){
-			output_html+="<div style=\"min-height: 110px;padding: 20px 20px 20px 150px;background:url("+img_list[node_list[i][1]]+") no-repeat 20px 20px;\">";
-			output_html+="<p style=\"margin: 0;padding-bottom: 10px;\">"+node_list[i][2]+"</p></div>";
-		}else if(node_list[i][0]=="right"){
-			output_html+="<div style=\"min-height: 110px;padding: 20px 150px 20px 20px;background:url("+img_list[node_list[i][1]]+") no-repeat 550px 20px;\">";
-			output_html+="<p>"+node_list[i][2]+"</p></div>";
+		if(node_list[i]["type"]=="left"){
+			output_html+="<div style=\"min-height: 110px;padding: 20px 20px 20px 150px;background:url("+img_list[node_list[i]["img"]]+") no-repeat 20px 20px;\">";
+			output_html+="<p style=\"margin: 0;padding-bottom: 10px;\">"+node_list[i]["line"]+"</p></div>";
+		}else if(node_list[i]["type"]=="right"){
+			output_html+="<div style=\"min-height: 110px;padding: 20px 150px 20px 20px;background:url("+img_list[node_list[i]["img"]]+") no-repeat 550px 20px;\">";
+			output_html+="<p>"+node_list[i]["line"]+"</p></div>";
 		}
 	}
 	$("div.setting textarea").val(output_html);
@@ -76,9 +76,9 @@ $("button.btn_save").click(function(){
 	var save_xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<dialog>\n";
 	for(var i=0; i<node_list.length; i++){
 		save_xml+="<scene>\n";
-		save_xml+="<direction>"+node_list[i][0]+"</direction>\n";
-		save_xml+="<img_id>"+node_list[i][1]+"</img_id>\n";
-		save_xml+="<line>"+node_list[i][2]+"</line>\n";
+		save_xml+="<direction>"+node_list[i]["type"]+"</direction>\n";
+		save_xml+="<img_id>"+node_list[i]["img"]+"</img_id>\n";
+		save_xml+="<line>"+node_list[i]["line"]+"</line>\n";
 		save_xml+="</scene>\n";
 	}
 	save_xml+="</dialog>";
@@ -93,7 +93,7 @@ $(".setting").on('click', '.btn_loadXML', function(){
 
 	var num=line_list.length;
 	for(var i=0; i<num; i++)
-		node_list[i]=[direction_list[i].innerHTML,img_id_list[i].innerHTML,line_list[i].innerHTML];
+node_list[i]={"type":direction_list[i].innerHTML,"img":img_id_list[i].innerHTML,"line":line_list[i].innerHTML};
 	reprint();
 });
 //XML読み込み画面表示（ボタン呼び出し）
@@ -106,8 +106,8 @@ $("button.btn_load").click(function(){
 //***ノードの選択・変更***
 //settingをノードに反映（ボタン呼び出し）
 $(".setting").on('click', '.change_node_param', function(){
-	node_list[selected_node_id][1]=$("div.setting select.node_param option:selected").attr("name");
-	node_list[selected_node_id][2]=$("div.setting textarea.node_param").val().replace(/\n/g,"<br />");
+	node_list[selected_node_id]["img"]=$("div.setting select.node_param option:selected").attr("name");
+	node_list[selected_node_id]["line"]=$("div.setting textarea.node_param").val().replace(/\n/g,"<br />");
 	reprint();
 	
 	$("div#node"+selected_node_id).addClass("selected_node");
@@ -118,13 +118,13 @@ $(".setting").on('click', '.delete_node', function(){
 });
 //ノード選択時に変更フォームをsettingに展開（toggle_node_select内で呼び出し）
 function get_select_editor(node_data){
-	var editor_html="<img class=\"node_param\" src=\""+img_list[node_data[1]]+"\" alt=\"\" />";
+	var editor_html="<img class=\"node_param\" src=\""+img_list[node_data["img"]]+"\" alt=\"\" />";
 	editor_html+="<select class=\"node_param\">";
 	$.each(img_list, function(key, value){
 		editor_html+="<option name=\""+key+"\">"+key+"</option>";
 	});
 	editor_html+="</select>";
-	editor_html+="<textarea class=\"node_param\">"+node_data[2]+"</textarea>";
+	editor_html+="<textarea class=\"node_param\">"+node_data["line"]+"</textarea>";
 	editor_html+="<button class=\"btn node_param change_node_param\">変更</button>";
 	editor_html+="<hr />";
 	editor_html+="<button class=\"btn node_param delete_node\">削除</button>";
