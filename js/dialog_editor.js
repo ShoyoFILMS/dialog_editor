@@ -12,6 +12,14 @@ function get_left_node(id,img_id,text){
 	return left_node;
 }
 
+//中央ノードを生成（reprintで呼び出し）
+function get_wide_node(id,img_id,text){
+	var right_node="<div class=\"node wide_node\" id=\"node"+id+"\" style=\"background-image:url("+img_list[img_id]+");\">";
+	right_node+="<p class=\"line\">"+text+"</p>";
+	right_node+="</div>";
+	return right_node;
+}
+
 //右揃えノードを生成（reprintで呼び出し）
 function get_right_node(id,img_id,text){
 	var right_node="<div class=\"node right_node\" id=\"node"+id+"\" style=\"background-image:url("+img_list[img_id]+");\">";
@@ -27,6 +35,8 @@ function reprint(){
 	for(var i=0; i<node_len; i++){
 		if(node_list[i]["type"]=="left"){
 			node=get_left_node(i,node_list[i]["img"],node_list[i]["line"]);
+		}else if(node_list[i]["type"]=="wide"){
+			node=get_wide_node(i,node_list[i]["img"],node_list[i]["line"]);
 		}else if(node_list[i]["type"]=="right"){
 			node=get_right_node(i,node_list[i]["img"],node_list[i]["line"]);
 		}
@@ -46,10 +56,11 @@ function reprint(){
 
 //ノードを追加（addLeftNode,addRightNodeで呼び出し）
 function addNode(node_data){
-	if(isNumber(selected_node_id))
+	if(isNumber(selected_node_id)){
 		node_list=array_putin(node_list,selected_node_id,{"type":node_data,"img":"empty","line":"セリフを追加"});
-	else
-	node_list.push({"type":node_data,"img":"empty","line":"セリフを追加"});
+	}else{
+		node_list.push({"type":node_data,"img":"empty","line":"セリフを追加"});
+	}
 	$("div.setting").html("<p class=\"empty_text\">未選択</p>");
 	selected_node_id=false;
 	reprint();
@@ -63,6 +74,9 @@ $("button.btn_output").click(function(){
 		if(node_list[i]["type"]=="left"){
 			output_html+="<div style=\"min-height: 110px;padding: 20px 20px 20px 150px;background:url("+img_list[node_list[i]["img"]]+") no-repeat 20px 20px;\">";
 			output_html+="<p style=\"margin: 0;padding-bottom: 10px;\">"+node_list[i]["line"]+"</p></div>";
+		}else if(node_list[i]["type"]=="wide"){
+			output_html+="<div style=\"min-height: 110px;padding: 130px 20px 20px 20px;background:url("+img_list[node_list[i]["img"]]+") no-repeat center 20px;\">";
+			output_html+="<p style=\"margin: 0; padding-top: 10px; text-align: center;\">"+node_list[i]["line"]+"</p></div>";
 		}else if(node_list[i]["type"]=="right"){
 			output_html+="<div style=\"min-height: 110px;padding: 20px 150px 20px 20px;background:url("+img_list[node_list[i]["img"]]+") no-repeat 550px 20px;\">";
 			output_html+="<p>"+node_list[i]["line"]+"</p></div>";
@@ -162,6 +176,9 @@ $(".article").on('click', '.node', function(){
 $(function(){
 	$("button.btn_add_left").click(function(){
 		addNode("left");
+	});
+	$("button.btn_add_wide").click(function(){
+		addNode("wide");
 	});
 	$("button.btn_add_right").click(function(){
 		addNode("right");

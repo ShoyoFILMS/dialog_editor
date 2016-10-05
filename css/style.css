@@ -40,12 +40,12 @@ div.article{
 
 /*<!style=\"url('http://bmimg.nicovideo.jp/image/ch2543599/99508/fcde392e3409acf0d7d8f3fa7b083376193811e1.jpg') no-repeat 20px 20px;margin:0 0 20px;padding:20px 20px 20px 150px;"*/
 
-div.left_node,div.right_node{
+div.node{
 	clear:both;
-	width:508px;
 	border:1px solid #ddd;
 }
 div.left_node{
+	width:508px;
 	min-height:110px;
 	float:left;
 	background:#fff no-repeat 20px 20px;
@@ -56,7 +56,18 @@ div.left_node p{
 	padding-bottom:10px;
 }
 
+div.wide_node{
+	background:#fff no-repeat center 20px;
+	padding:130px 20px 20px 20px;
+}
+div.wide_node p{
+	margin:0;
+	padding-top:10px;
+	text-align:center;
+}
+
 div.right_node{
+	width:508px;
 	min-height:110px;
 	float:right;
 	background:#fff no-repeat 550px 20px;
