@@ -79,7 +79,7 @@ $("button.btn_output").click(function(){
 			output_html+="<p style=\"margin: 0; padding-top: 10px; text-align: center;\">"+node_list[i]["line"]+"</p></div>";
 		}else if(node_list[i]["type"]=="right"){
 			output_html+="<div style=\"min-height: 110px;padding: 20px 150px 20px 20px;background:url("+img_list[node_list[i]["img"]]+") no-repeat 550px 20px;\">";
-			output_html+="<p>"+node_list[i]["line"]+"</p></div>";
+			output_html+="<p style=\"margin: 0; padding-bottom: 10px\">"+node_list[i]["line"]+"</p></div>";
 		}
 	}
 	$("div.setting textarea").val(output_html);
