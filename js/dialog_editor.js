@@ -134,8 +134,13 @@ $(".setting").on('click', '.delete_node', function(){
 function get_select_editor(node_data){
 	var editor_html="<img class=\"node_param\" src=\""+img_list[node_data["img"]]+"\" alt=\"\" />";
 	editor_html+="<select class=\"node_param\">";
+	console.log(node_data);
 	$.each(img_list, function(key, value){
-		editor_html+="<option name=\""+key+"\">"+key+"</option>";
+		if(key == node_data["img"]){
+			editor_html+="<option name=\""+key+"\" selected>"+key+"</option>";
+		}else{
+			editor_html+="<option name=\""+key+"\">"+key+"</option>";
+		}
 	});
 	editor_html+="</select>";
 	editor_html+="<textarea class=\"node_param\">"+node_data["line"]+"</textarea>";
