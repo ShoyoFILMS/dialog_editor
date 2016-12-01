@@ -88,7 +88,8 @@ $("button.btn_output").click(function(){
 //XML保存（ボタン呼び出し）
 $("button.btn_save").click(function(){
 	var save_xml="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<dialog>\n";
-	for(var i=0; i<node_list.length; i++){
+	var num= node_list.length;
+	for(var i=0; i<num; i++){
 		save_xml+="<scene>\n";
 		save_xml+="<direction>"+node_list[i]["type"]+"</direction>\n";
 		save_xml+="<img_id>"+node_list[i]["img"]+"</img_id>\n";
@@ -134,7 +135,6 @@ $(".setting").on('click', '.delete_node', function(){
 function get_select_editor(node_data){
 	var editor_html="<img class=\"node_param\" src=\""+img_list[node_data["img"]]+"\" alt=\"\" />";
 	editor_html+="<select class=\"node_param\">";
-	console.log(node_data);
 	$.each(img_list, function(key, value){
 		if(key == node_data["img"]){
 			editor_html+="<option name=\""+key+"\" selected>"+key+"</option>";
